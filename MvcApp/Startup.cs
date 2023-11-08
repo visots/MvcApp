@@ -28,6 +28,7 @@ namespace MvcApp
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<BlogContext>(options => options.UseSqlServer(connection), ServiceLifetime.Singleton);
             services.AddSingleton<IBlogRepository, BlogRepository>();
+            services.AddTransient<ILoggerRepository, LoggerRepository>();
             services.AddControllersWithViews();
         }
 

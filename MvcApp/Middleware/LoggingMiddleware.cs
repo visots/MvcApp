@@ -1,13 +1,13 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using MvcApp.Models.DB;
 
 namespace MvcApp.Middleware
 {
     public class LoggingMiddleware
     {
         private readonly RequestDelegate _next;
-  
         /// <summary>
         ///  Middleware-компонент должен иметь конструктор, принимающий RequestDelegate
         /// </summary>
@@ -15,15 +15,15 @@ namespace MvcApp.Middleware
         {
             _next = next;
         }
-  
-        /// <summary>
-        ///  Необходимо реализовать метод Invoke  или InvokeAsync
-        /// </summary>
-        public async Task InvokeAsync(HttpContext context)
+        
+        public async Task InvokeAsync(HttpContext context, ILoggerRepository repo)
         {
-            // Для логирования данных о запросе используем свойста объекта HttpContext
             Console.WriteLine($"[{DateTime.Now}]: New request to http://{context.Request.Host.Value + context.Request.Path}");
-      
+
+            var request = new Request();
+            request.Url = $"http://{context.Request.Host.Value + context.Request.Path}";
+            await repo.WriteMessage(request);
+            
             // Передача запроса далее по конвейеру
             await _next.Invoke(context);
         }
