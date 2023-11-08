@@ -21,19 +21,19 @@ namespace MvcApp.Controllers
             _repo = repoo;
         }
 
-        public async Task <IActionResult> Index()
+        public IActionResult Index()
         {
-            var newUser = new User()
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Andrey",
-                LastName = "Petrov",
-                JoinDate = DateTime.Now
-            };
-            await _repo.AddUser(newUser);
-            
-            Console.WriteLine($"User with id {newUser.Id}, named {newUser.FirstName} was successfully added on {newUser.JoinDate}");
-          
+            // var newUser = new User()
+            // {
+            //     Id = Guid.NewGuid(),
+            //     FirstName = "Andrey",
+            //     LastName = "Petrov",
+            //     JoinDate = DateTime.Now
+            // };
+            // await _repo.AddUser(newUser);
+            //
+            // Console.WriteLine($"User with id {newUser.Id}, named {newUser.FirstName} was successfully added on {newUser.JoinDate}");
+            //
             return View();
         }
 
@@ -47,5 +47,11 @@ namespace MvcApp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        // public async Task<IActionResult> Authors()
+        // {
+        //     var authors = await _repo.GetUsers();
+        //     return View(authors);
+        // }
     }
 }
